@@ -10,6 +10,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PerluDilindungi">
         <activity
+            android:name=".NewsHome"
+            android:exported="false"
+            android:label="@string/title_activity_news_home"
+            android:theme="@style/Theme.PerluDilindungi.NoActionBar" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
