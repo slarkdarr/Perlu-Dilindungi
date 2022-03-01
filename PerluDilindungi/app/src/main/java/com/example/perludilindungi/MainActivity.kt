@@ -40,4 +40,8 @@ class MainActivity : AppCompatActivity() {
             transaction.commit()
         }
     }
+//    override fun onDestroy() {
+//        super.onDestroy()
+//        _binding = null
+//    }
 }

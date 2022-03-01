@@ -13,6 +13,6 @@ data class Fakses(
 	@field:SerializedName("message")
 	val message: String,
 
-	@field:SerializedName("results")
+	@field:SerializedName("data")
 	val results: List<FaksesResult>
 )
