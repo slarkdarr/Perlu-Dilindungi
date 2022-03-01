@@ -17,12 +17,12 @@ class RetrofitBuilder {
     }
     fun buildRetrofit(): Retrofit {
         return Retrofit.Builder()
-            .baseUrl("https://perludilindungi.herokuapp.com")
+            .baseUrl("https://perludilindungi.herokuapp.com/api/")
             .client(getInterceptor())
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }
-    fun getRetrofit()= buildRetrofit().create(NewsApiInterface::class.java)
+    fun getRetrofit()= buildRetrofit().create(ApiInterface::class.java)
 
 
 }
