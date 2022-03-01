@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/navigation_news_list"
+        android:icon="@drawable/ic_launcher_foreground"
+        android:title="News List"/>
+    <item
+        android:id="@+id/navigation_daftar_fakses"
+        android:icon="@drawable/ic_launcher_foreground"
+        android:title="Daftar Fakses"/>
+    <item
+        android:id="@+id/navigation_bookmark"
+        android:icon="@drawable/ic_launcher_foreground"
+        android:title="Bookmark"/>
+</menu>
