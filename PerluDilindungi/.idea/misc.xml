@@ -3,12 +3,18 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="../../../../../../../../../../layout/custom_preview.xml" value="0.1390625" />
         <entry key="..\:/Users/moses/Moses/Project/PBD/if3210-2022-android-27/PerluDilindungi/app/src/main/res/layout/activity_main.xml" value="0.1793478260869565" />
-        <entry key="..\:/Users/moses/Moses/Project/PBD/if3210-2022-android-27/PerluDilindungi/app/src/main/res/layout/fragment_bookmark.xml" value="0.14385964912280702" />
-        <entry key="..\:/Users/moses/Moses/Project/PBD/if3210-2022-android-27/PerluDilindungi/app/src/main/res/layout/fragment_daftar_fakses.xml" value="0.12135416666666667" />
-        <entry key="..\:/Users/moses/Moses/Project/PBD/if3210-2022-android-27/PerluDilindungi/app/src/main/res/layout/fragment_news_list.xml" value="0.1276595744680851" />
-        <entry key="..\:/Users/moses/Moses/Project/PBD/if3210-2022-android-27/PerluDilindungi/app/src/main/res/layout/item_fakses.xml" value="0.1" />
-        <entry key="..\:/Users/moses/Moses/Project/PBD/if3210-2022-android-27/PerluDilindungi/app/src/main/res/menu/botom_navigation.xml" value="0.25416666666666665" />
+        <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.22760416666666666" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_news_home.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/content_news_home.xml" value="0.165" />
+        <entry key="app/src/main/res/layout/fragment_first.xml" value="0.19927536231884058" />
+        <entry key="app/src/main/res/layout/fragment_news_list.xml" value="0.115625" />
+        <entry key="app/src/main/res/layout/fragment_second.xml" value="0.21422101449275363" />
+        <entry key="app/src/main/res/layout/news_card.xml" value="0.1793478260869565" />
+        <entry key="app/src/main/res/layout/news_list_items.xml" value="0.165" />
+        <entry key="app/src/main/res/menu/bottom_navigation.xml" value="0.115625" />
       </map>
     </option>
   </component>
