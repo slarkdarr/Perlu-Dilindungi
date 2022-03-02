@@ -11,7 +11,6 @@ import com.example.perludilindungi.data.api.RetrofitBuilder
 import com.example.perludilindungi.data.model.News
 import com.example.perludilindungi.data.model.NewsResult
 import com.example.perludilindungi.databinding.FragmentNewsListBinding
-import com.example.perludilindungi.databinding.NewsListItemsBinding
 import com.example.perludilindungi.ui.adapter.NewsAdapter
 import retrofit2.Call
 import retrofit2.Callback

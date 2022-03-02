@@ -6,26 +6,27 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.perludilindungi.data.model.News
 import com.example.perludilindungi.data.model.NewsResult
-import com.example.perludilindungi.databinding.NewsListItemsBinding
+import com.example.perludilindungi.databinding.ItemNewsBinding
 
 class NewsAdapter (val data: NewsResult?):
     RecyclerView.Adapter<NewsAdapter.NewsHolder>() {
 
 
-    inner class NewsHolder(val binding: NewsListItemsBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class NewsHolder(val binding: ItemNewsBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(item: News) {
             binding.textTitle.text = item.title
-            binding.textSource.text = item.url.toString()
+            binding.textSource.text = item.url[0]
+            binding.date.text = item.date
 
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsAdapter.NewsHolder {
-        val v = NewsListItemsBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsHolder {
+        val v = ItemNewsBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return NewsHolder(v)
     }
 
-    override fun onBindViewHolder(holder: NewsAdapter.NewsHolder, position: Int) {
+    override fun onBindViewHolder(holder: NewsHolder, position: Int) {
         Log.d("TAG", "ADAPTER BIND DATA::: $data")
         if (data != null) {
             holder.bind(data?.results?.get(position)!!)
