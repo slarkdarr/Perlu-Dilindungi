@@ -2,12 +2,16 @@ package com.example.perludilindungi.data.api
 
 import com.example.perludilindungi.data.model.City
 import com.example.perludilindungi.data.model.Fakses
+import com.example.perludilindungi.data.model.NewsResult
 import com.example.perludilindungi.data.model.Province
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface ApiInterface {
+    @GET("get-news")
+    fun getNews(): Call<NewsResult>
+
     @GET("get-province")
     fun getProvince(): Call<Province>
 
