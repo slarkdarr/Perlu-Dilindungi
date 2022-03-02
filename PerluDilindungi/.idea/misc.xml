@@ -5,9 +5,10 @@
       <map>
         <entry key="..\:/Users/moses/Moses/Project/PBD/if3210-2022-android-27/PerluDilindungi/app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="..\:/Users/moses/Moses/Project/PBD/if3210-2022-android-27/PerluDilindungi/app/src/main/res/layout/fragment_bookmark.xml" value="0.14385964912280702" />
-        <entry key="..\:/Users/moses/Moses/Project/PBD/if3210-2022-android-27/PerluDilindungi/app/src/main/res/layout/fragment_daftar_fakses.xml" value="0.12135416666666667" />
-        <entry key="..\:/Users/moses/Moses/Project/PBD/if3210-2022-android-27/PerluDilindungi/app/src/main/res/layout/fragment_news_list.xml" value="0.1276595744680851" />
-        <entry key="..\:/Users/moses/Moses/Project/PBD/if3210-2022-android-27/PerluDilindungi/app/src/main/res/layout/item_fakses.xml" value="0.1" />
+        <entry key="..\:/Users/moses/Moses/Project/PBD/if3210-2022-android-27/PerluDilindungi/app/src/main/res/layout/fragment_daftar_fakses.xml" value="0.264" />
+        <entry key="..\:/Users/moses/Moses/Project/PBD/if3210-2022-android-27/PerluDilindungi/app/src/main/res/layout/fragment_news_list.xml" value="0.4" />
+        <entry key="..\:/Users/moses/Moses/Project/PBD/if3210-2022-android-27/PerluDilindungi/app/src/main/res/layout/item_fakses.xml" value="0.264" />
+        <entry key="..\:/Users/moses/Moses/Project/PBD/if3210-2022-android-27/PerluDilindungi/app/src/main/res/layout/news_list_items.xml" value="0.2078804347826087" />
         <entry key="..\:/Users/moses/Moses/Project/PBD/if3210-2022-android-27/PerluDilindungi/app/src/main/res/menu/botom_navigation.xml" value="0.25416666666666665" />
       </map>
     </option>

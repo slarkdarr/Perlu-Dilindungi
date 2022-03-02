@@ -15,7 +15,6 @@ class DaftarFaksesAdapter(val data: Fakses?):
         fun bind(item: FaksesResult){
             binding.faksesName.text = item.nama
             binding.faksesAddress.text = item.alamat
-            binding.faksesStatus.text= item.status
             binding.faksesCode.text = item.kode
             binding.faksesType.text = item.jenisFaskes
             binding.faksesTelp.text = item.telp
