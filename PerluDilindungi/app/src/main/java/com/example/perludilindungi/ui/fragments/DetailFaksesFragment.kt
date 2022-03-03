@@ -1,5 +1,7 @@
 package com.example.perludilindungi.ui.fragments
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -62,6 +64,16 @@ class DetailFaksesFragment : Fragment() {
                             Toast.makeText(context,"Fakses Added To Bookmark", Toast.LENGTH_SHORT).show()
 
                         }
+                    }
+
+                    binding.buttonGoogleMap.setOnClickListener{
+                        // Display a label at the location of Google's Sydney office
+                        val gmmIntentUri =
+                            // Uri.parse("geo:0,0?q=${result!!.latitude},${result!!.longitude}(${result!!.nama})")
+                            Uri.parse("geo:${result!!.latitude},${result!!.longitude}?q=${Uri.encode(result!!.nama)}")
+                        val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
+                        mapIntent.setPackage("com.google.android.apps.maps")
+                        startActivity(mapIntent)
                     }
                 }
             })
