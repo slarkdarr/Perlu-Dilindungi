@@ -1,15 +1,20 @@
 package com.example.perludilindungi.ui.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.perludilindungi.MainActivity
+import com.example.perludilindungi.NewsPageActivity
 import com.example.perludilindungi.data.api.RetrofitBuilder
 import com.example.perludilindungi.data.model.News
 import com.example.perludilindungi.data.model.NewsResult
+import com.example.perludilindungi.databinding.ActivityMainBinding
 import com.example.perludilindungi.databinding.FragmentNewsListBinding
 import com.example.perludilindungi.ui.adapter.NewsAdapter
 import retrofit2.Call
@@ -43,6 +48,9 @@ class NewsListFragment : Fragment() {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
+        _binding = FragmentNewsListBinding.inflate(layoutInflater)
+
+
 
 
     }
