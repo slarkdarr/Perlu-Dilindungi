@@ -1,7 +1,13 @@
 package com.example.perludilindungi.data.model
 
+import android.os.Parcelable
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
 
+@Entity(tableName = "tb_bookmark")
+@Parcelize
 data class FaksesResult(
 
 	@field:SerializedName("provinsi")
@@ -34,15 +40,16 @@ data class FaksesResult(
 	@field:SerializedName("jenis_faskes")
 	val jenisFaskes: String,
 
+	@PrimaryKey
 	@field:SerializedName("id")
 	val id: Int,
 
-	@field:SerializedName("detail")
-	val detail: List<FaksesDetail>,
+//	@field:SerializedName("detail")
+//	val detail: List<FaksesDetail>,
 
 	@field:SerializedName("longitude")
 	val longitude: String,
 
 	@field:SerializedName("status")
 	val status: String
-)
+): Parcelable

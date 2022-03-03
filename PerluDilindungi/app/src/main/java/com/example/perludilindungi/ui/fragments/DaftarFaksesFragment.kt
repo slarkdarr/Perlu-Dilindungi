@@ -8,6 +8,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import androidx.core.os.bundleOf
+import androidx.fragment.app.commit
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.perludilindungi.R
 import com.example.perludilindungi.data.api.RetrofitBuilder
@@ -69,7 +71,9 @@ class DaftarFaksesFragment : Fragment() {
 
         binding.rvFakses.layoutManager = LinearLayoutManager(activity)
         Log.d("TAG","INSERT DATA::: $data")
-        binding.rvFakses.adapter = DaftarFaksesAdapter(data)
+        binding.rvFakses.adapter = DaftarFaksesAdapter(data,DaftarFaksesAdapter.OnClickListener{
+            item -> goToDetailFaksesFragment(item)
+        })
         return binding.root
     }
     private fun setupDaftarFakses(province: String, city: String){
@@ -82,7 +86,12 @@ class DaftarFaksesFragment : Fragment() {
                     response: Response<Fakses>) {
                     Log.d("TAG","Response Hitted!!!!")
                     data = response.body()
-                    binding.rvFakses.adapter = DaftarFaksesAdapter(response.body()!!)
+                    binding.rvFakses.adapter =
+                        DaftarFaksesAdapter(
+                            response.body()!!,
+                            DaftarFaksesAdapter.OnClickListener{
+                            item -> goToDetailFaksesFragment(item)
+                    })
                     Log.d("TAG","Response::: ${data?.results}")
                 }
 
@@ -106,7 +115,7 @@ class DaftarFaksesFragment : Fragment() {
 
                 override fun onResponse(call: Call<City>, response: Response<City>) {
                     cityArray =  response.body()!!.results.map { it.key }.toTypedArray()
-                    binding.spinnerCity.adapter = ArrayAdapter(requireContext(),android.R.layout.simple_spinner_item,
+                    binding.spinnerCity.adapter = ArrayAdapter(context!!,android.R.layout.simple_spinner_item,
                         cityArray!!
                     )
 
@@ -139,7 +148,7 @@ class DaftarFaksesFragment : Fragment() {
 
                 override fun onResponse(call: Call<Province>, response: Response<Province>) {
                     provinceArray =  response.body()!!.results.map { it.key }.toTypedArray()
-                    binding.spinnerProvince.adapter = ArrayAdapter(requireContext(),android.R.layout.simple_spinner_item,
+                    binding.spinnerProvince.adapter = ArrayAdapter(context!!,android.R.layout.simple_spinner_item,
                         provinceArray!!
                     )
 
@@ -160,8 +169,17 @@ class DaftarFaksesFragment : Fragment() {
                 // TODO("Not yet implemented")
             }
         }
+    }
+    private fun goToDetailFaksesFragment(faksesResult:FaksesResult){
+
+        parentFragmentManager.commit {
+            replace(R.id.fragment_container,DetailFaksesFragment())
+        }
+
+        parentFragmentManager.setFragmentResult("requestFakses", bundleOf("responseFakses" to faksesResult))
 
     }
+
     companion object {
         /**
          * Use this factory method to create a new instance of

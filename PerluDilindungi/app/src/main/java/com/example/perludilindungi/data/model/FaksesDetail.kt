@@ -1,7 +1,10 @@
 package com.example.perludilindungi.data.model
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
 
+@Parcelize
 data class FaksesDetail(
 
 	@field:SerializedName("batal_vaksin")
@@ -42,4 +45,4 @@ data class FaksesDetail(
 
 	@field:SerializedName("batal_vaksin_1")
 	val batalVaksin1: Int
-)
+): Parcelable

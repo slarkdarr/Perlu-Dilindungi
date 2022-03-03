@@ -1,7 +1,10 @@
 package com.example.perludilindungi.data.model
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
 
+@Parcelize
 data class Fakses(
 
 	@field:SerializedName("count_total")
@@ -15,4 +18,4 @@ data class Fakses(
 
 	@field:SerializedName("data")
 	val results: List<FaksesResult>
-)
+) : Parcelable

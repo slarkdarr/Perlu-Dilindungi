@@ -5,7 +5,16 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
+import androidx.fragment.app.commit
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.perludilindungi.R
+import com.example.perludilindungi.data.model.FaksesResult
+import com.example.perludilindungi.databinding.FragmentBookmarkBinding
+import com.example.perludilindungi.databinding.FragmentDaftarFaksesBinding
+import com.example.perludilindungi.ui.adapter.BookmarkAdapter
+import com.example.perludilindungi.ui.viewmodel.BookmarkViewModel
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -18,6 +27,11 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 class BookmarkFragment : Fragment() {
+    private var _binding : FragmentBookmarkBinding? =null
+    private val binding get() = _binding!!
+    private lateinit var  bookmarkAdapter: BookmarkAdapter
+    private  lateinit var bookmarkViewModel: BookmarkViewModel
+
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -34,10 +48,34 @@ class BookmarkFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        _binding = FragmentBookmarkBinding.inflate(layoutInflater)
+
+        bookmarkAdapter = BookmarkAdapter(
+            BookmarkAdapter.OnClickListener{
+                item -> goToDetailFaksesFragment(item)
+        })
+        bookmarkViewModel = ViewModelProvider(this)[BookmarkViewModel::class.java]
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_bookmark, container, false)
+        binding.rvBookmark.apply {
+            layoutManager= LinearLayoutManager(activity)
+            adapter = bookmarkAdapter
+        }
+        bookmarkViewModel.bookmarks.observe(this,{
+            bookmarkAdapter.setData(it)
+        })
+        bookmarkViewModel.getBookmark(context!!)
+        return binding.root
     }
 
+    private fun goToDetailFaksesFragment(faksesResult: FaksesResult){
+
+        parentFragmentManager.commit {
+            replace(R.id.fragment_container,DetailFaksesFragment())
+        }
+
+        parentFragmentManager.setFragmentResult("requestFakses", bundleOf("responseFakses" to faksesResult))
+
+    }
     companion object {
         /**
          * Use this factory method to create a new instance of
