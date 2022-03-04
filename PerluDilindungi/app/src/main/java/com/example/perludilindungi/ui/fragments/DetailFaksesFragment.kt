@@ -10,10 +10,9 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.FragmentResultListener
 import androidx.lifecycle.ViewModelProvider
-import com.example.perludilindungi.R
 import com.example.perludilindungi.data.model.FaksesResult
 import com.example.perludilindungi.databinding.FragmentDetailFaksesBinding
-import com.example.perludilindungi.ui.viewmodel.DetailFaksesViewModel
+import com.example.perludilindungi.ui.viewmodel.BookmarkViewModel
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -29,7 +28,7 @@ class DetailFaksesFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var _binding: FragmentDetailFaksesBinding ? = null
     private val binding get() = _binding!!
-    private lateinit var viewModel:DetailFaksesViewModel
+    private lateinit var viewModel:BookmarkViewModel
     private var param1: String? = null
     private var param2: String? = null
 
@@ -58,18 +57,33 @@ class DetailFaksesFragment : Fragment() {
                     binding.tvDetailFaksesTelp.text = result.telp
                     binding.tvDetailFaksesType.text = result.jenisFaskes
 
-                    viewModel = ViewModelProvider(this)[DetailFaksesViewModel::class.java]
-                    binding.buttonBookmark.setOnClickListener{
-                        viewModel.addBookmark(context!!,result!!){
-                            Toast.makeText(context,"Fakses Added To Bookmark", Toast.LENGTH_SHORT).show()
+//                    var bookmarkExist = false
+                    viewModel = ViewModelProvider(this)[BookmarkViewModel::class.java]
+                    viewModel.checkBookmarkExists(context!!,result.id)
+                    viewModel.isBookmarkExist.observe(this,{
+                        if (it){
+                            binding.buttonBookmark.text ="UNBOOKMARK"
+                            binding.buttonBookmark.setOnClickListener{
+                                viewModel.deleteBookmark(context!!,result!!){
+                                    Toast.makeText(context,"Fakses Has Been Unbookmarked", Toast.LENGTH_SHORT).show()
 
+                                }
+                            }
                         }
-                    }
+                        else {
+                            binding.buttonBookmark.text ="BOOKMARK"
+                            binding.buttonBookmark.setOnClickListener{
+                                viewModel.addBookmark(context!!,result!!){
+                                    Toast.makeText(context,"Fakses Added To Bookmark", Toast.LENGTH_SHORT).show()
+//                                    bookmarkExist = true
+                                }
+                            }
+                        }
+                    })
 
                     binding.buttonGoogleMap.setOnClickListener{
-                        // Display a label at the location of Google's Sydney office
                         val gmmIntentUri =
-                            // Uri.parse("geo:0,0?q=${result!!.latitude},${result!!.longitude}(${result!!.nama})")
+
                             Uri.parse("geo:${result!!.latitude},${result!!.longitude}?q=${Uri.encode(result!!.nama)}")
                         val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
                         mapIntent.setPackage("com.google.android.apps.maps")

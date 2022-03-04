@@ -64,6 +64,7 @@ class BookmarkFragment : Fragment() {
             bookmarkAdapter.setData(it)
         })
         bookmarkViewModel.getBookmark(context!!)
+
         return binding.root
     }
 

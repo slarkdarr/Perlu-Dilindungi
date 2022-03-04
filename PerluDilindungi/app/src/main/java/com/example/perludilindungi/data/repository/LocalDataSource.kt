@@ -21,4 +21,12 @@ class LocalDataSource(context: Context) {
             bookmarkDao.addBookmark(data)
         }
     }
+
+    fun deleteBookmark(data:FaksesResult){
+        CoroutineScope(Dispatchers.Main).launch{
+            bookmarkDao.deleteBookmark(data)
+        }
+    }
+
+ 
 }

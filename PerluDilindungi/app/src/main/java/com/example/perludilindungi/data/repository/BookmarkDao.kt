@@ -12,4 +12,8 @@ interface BookmarkDao {
     
     @Insert(onConflict=OnConflictStrategy.REPLACE)
     suspend fun addBookmark(data:FaksesResult)
+
+    @Delete
+    suspend fun deleteBookmark(data:FaksesResult)
+
 }
