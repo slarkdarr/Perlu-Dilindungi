@@ -24,9 +24,7 @@ class NewsAdapter (val data: NewsResult?):
     var title: String = ""
     var url: String = ""
     var pubDate: String = ""
-
     var newsContent: String = " "
-
     var imgUrl: String = " "
 
 
@@ -43,12 +41,6 @@ class NewsAdapter (val data: NewsResult?):
 
             newsContent = Gson().fromJson(item.content, Content::class.java).__cdata
             imgUrl =   Gson().fromJson(item.enclosure, Enclosure::class.java)._url
-
-
-
-
-
-
         }
     }
 
@@ -56,11 +48,9 @@ class NewsAdapter (val data: NewsResult?):
         val v = ItemNewsBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         v.newsContainer.setOnClickListener { item->
             val intent = Intent(parent.context, NewsPageActivity::class.java)
-            intent.putExtra("url", url)
-            intent.putExtra("pubDate", pubDate)
+            intent.putExtra("url", v.textSource.text)
+            intent.putExtra("pubDate", v.date.text)
             intent.putExtra("title", title)
-            intent.putExtra("content", newsContent)
-            intent.putExtra("imgUrl", imgUrl)
             parent.context.startActivity(intent)
         }
         return NewsHolder(v)
