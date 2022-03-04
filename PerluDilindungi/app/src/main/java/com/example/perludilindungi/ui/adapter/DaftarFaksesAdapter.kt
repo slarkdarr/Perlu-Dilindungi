@@ -8,25 +8,16 @@ import com.example.perludilindungi.data.model.Fakses
 import com.example.perludilindungi.data.model.FaksesResult
 import com.example.perludilindungi.databinding.ItemFaksesBinding
 
-class DaftarFaksesAdapter(val data: Fakses?):
+class DaftarFaksesAdapter(val data: Fakses?, private val onClickListener: OnClickListener):
     RecyclerView.Adapter<DaftarFaksesAdapter.DaftarFaksesHolder>() {
 
     inner class DaftarFaksesHolder(val binding: ItemFaksesBinding): RecyclerView.ViewHolder(binding.root){
         fun bind(item: FaksesResult){
             binding.faksesName.text = item.nama
             binding.faksesAddress.text = item.alamat
-            binding.faksesStatus.text= item.status
             binding.faksesCode.text = item.kode
             binding.faksesType.text = item.jenisFaskes
             binding.faksesTelp.text = item.telp
-
-//            binding.faksesName.text = "name"
-//            binding.faksesAddress.text = "item.alamat"
-//            binding.faksesStatus.text= "item.status"
-//            binding.faksesCode.text = "item.kode"
-//            binding.faksesType.text = "item.jenisFaskes"
-//            binding.faksesTelp.text = "item.telp"
-
         }
     }
 
@@ -39,10 +30,11 @@ class DaftarFaksesAdapter(val data: Fakses?):
         Log.d("TAG","ADAPTER BIND DATA::: $data")
         if (data != null) {
             holder.bind(data?.results?.get(position)!!)
+            holder.itemView.setOnClickListener {
+                onClickListener.onClick(data?.results?.get(position)!!)
+            }
         }
-//        else{
-//
-//        }
+        
     }
 
     override fun getItemCount(): Int {
@@ -55,5 +47,7 @@ class DaftarFaksesAdapter(val data: Fakses?):
             return data.results.size
         }
     }
-
+    class OnClickListener(val clickListener : (faksesResult: FaksesResult) ->Unit){
+        fun onClick(faksesResult: FaksesResult) = clickListener(faksesResult)
+    }
 }

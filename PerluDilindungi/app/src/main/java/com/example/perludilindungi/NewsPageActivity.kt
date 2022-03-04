@@ -1,55 +1,43 @@
 package com.example.perludilindungi
 
-import android.annotation.SuppressLint
-import android.app.ProgressDialog
-import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.example.perludilindungi.databinding.ActivityNewsPageBinding
 import android.webkit.WebView
 import android.webkit.WebViewClient
-import androidx.annotation.RequiresApi
 import android.net.http.*
-import android.net.http.SslError
-
+import android.view.WindowManager
 import android.webkit.SslErrorHandler
-import android.R
-import android.view.View
+import com.example.perludilindungi.R
+import com.example.perludilindungi.databinding.ActivityNewsPageBinding
+import com.squareup.picasso.Picasso
 
 
 class NewsPageActivity : AppCompatActivity() {
+    private lateinit var webView: WebView
     private var _binding : ActivityNewsPageBinding? = null
     private val binding get() = _binding!!
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         _binding = ActivityNewsPageBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         setSupportActionBar(binding.newsActionBar)
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true);
 
-        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        webView = binding.newsContent
 
-        binding.newsTitle.text = intent.getStringExtra("title")
-        binding.newsPubDate.text = intent.getStringExtra("pubDate")
         binding.newsUrl.text = intent.getStringExtra("url")
 
-        var webView: WebView = binding.newsContent
-
-        webView.settings.javaScriptEnabled = true
-        webView.settings.loadWithOverviewMode = true
-        webView.settings.useWideViewPort = true
         webView.webViewClient = object : WebViewClient() {
-            override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
-
-                return true
-            }
-
-            override fun onPageFinished(view: WebView, url: String) {
+            override fun onReceivedSslError(
+                view: WebView,
+                handler: SslErrorHandler,
+                error: SslError
+            ) {
+                handler.proceed()
             }
         }
 
-        webView.loadUrl("http://www.google.com");
+        webView.loadUrl(intent.getStringExtra("url").toString())
     }
 
 
