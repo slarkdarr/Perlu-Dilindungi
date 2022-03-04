@@ -1,6 +1,9 @@
 package com.example.perludilindungi.data.model
 
+import com.google.gson.JsonObject
 import com.google.gson.annotations.SerializedName
+import org.json.JSONObject
+import java.util.*
 
 data class News(
 
@@ -11,5 +14,12 @@ data class News(
     val url: List<String>,
 
     @field:SerializedName("pubDate")
-    val date: String
+    val date: String,
+
+    @field:SerializedName("description")
+    val content: JsonObject,
+
+    @field:SerializedName("enclosure")
+    val enclosure: JsonObject
+
 )

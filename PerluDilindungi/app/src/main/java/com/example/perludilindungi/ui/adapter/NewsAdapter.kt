@@ -1,28 +1,58 @@
 package com.example.perludilindungi.ui.adapter
 
+import android.content.Context
+import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import com.example.perludilindungi.MainActivity
+import com.example.perludilindungi.NewsPageActivity
+import com.example.perludilindungi.data.model.Content
+import com.example.perludilindungi.data.model.Enclosure
 import com.example.perludilindungi.data.model.News
 import com.example.perludilindungi.data.model.NewsResult
 import com.example.perludilindungi.databinding.ItemNewsBinding
+import com.google.firebase.firestore.util.Assert
+import com.google.gson.Gson
+import java.util.*
 
 class NewsAdapter (val data: NewsResult?):
+
     RecyclerView.Adapter<NewsAdapter.NewsHolder>() {
+    var title: String = ""
+    var url: String = ""
+    var pubDate: String = ""
+    var newsContent: String = " "
+    var imgUrl: String = " "
 
 
     inner class NewsHolder(val binding: ItemNewsBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(item: News) {
             binding.textTitle.text = item.title
-            binding.textSource.text = item.url[0]
-            binding.date.text = item.date
+            title = item.title
 
+            binding.textSource.text = item.url[0]
+            url = item.url[0]
+
+            binding.date.text = item.date
+            pubDate = item.date
+
+            newsContent = Gson().fromJson(item.content, Content::class.java).__cdata
+            imgUrl =   Gson().fromJson(item.enclosure, Enclosure::class.java)._url
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsHolder {
         val v = ItemNewsBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        v.newsContainer.setOnClickListener { item->
+            val intent = Intent(parent.context, NewsPageActivity::class.java)
+            intent.putExtra("url", v.textSource.text)
+            intent.putExtra("pubDate", v.date.text)
+            intent.putExtra("title", title)
+            parent.context.startActivity(intent)
+        }
         return NewsHolder(v)
     }
 
