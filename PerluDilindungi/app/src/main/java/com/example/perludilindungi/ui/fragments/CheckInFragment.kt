@@ -1,10 +1,18 @@
 package com.example.perludilindungi.ui.fragments
 
+import android.content.Context
+import android.hardware.Sensor
+import android.hardware.SensorEvent
+import android.hardware.SensorEventListener
+import android.hardware.SensorManager
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
+import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.getSystemService
 import com.example.perludilindungi.R
 import com.example.perludilindungi.databinding.FragmentCheckInBinding
 import com.example.perludilindungi.databinding.FragmentNewsListBinding
@@ -19,9 +27,13 @@ private const val ARG_PARAM2 = "param2"
  * Use the [CheckInFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class CheckInFragment : Fragment() {
+class CheckInFragment : Fragment(), SensorEventListener {
     private var _binding : FragmentCheckInBinding? = null
     private val binding get() = _binding!!
+
+    private lateinit var sensorManager: SensorManager
+    private lateinit var tempSensor: Sensor
+    private lateinit var tempString: String
 
     // TODO: Rename and change types of parameters
     private var param1: String? = null
@@ -33,6 +45,14 @@ class CheckInFragment : Fragment() {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
+
+        sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
+
+        if (sensorManager.getDefaultSensor(Sensor.TYPE_AMBIENT_TEMPERATURE) != null) {
+            tempSensor = sensorManager.getDefaultSensor(Sensor.TYPE_AMBIENT_TEMPERATURE)
+        } else {
+            tempString = "-"
+        }
     }
 
     override fun onCreateView(
@@ -42,10 +62,16 @@ class CheckInFragment : Fragment() {
         // Inflate the layout for this fragment
         _binding = FragmentCheckInBinding.inflate(layoutInflater)
 
-//        binding.textTemp.text = "30°C"
-//        binding.textInfo.text = "Berhasil!"
+        binding.textTemp.text = tempString
+        binding.textInfo.text = "Berhasil!"
 
         return binding.root
+    }
+
+    override fun onSensorChanged(sensorEvent: SensorEvent) {
+        if (sensorEvent.sensor.type == Sensor.TYPE_AMBIENT_TEMPERATURE) {
+            tempString = sensorEvent!!.values[0].toString()
+        }
     }
 
     companion object {
