@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.example.perludilindungi.databinding.ActivityMainBinding
 import com.example.perludilindungi.ui.fragments.BookmarkFragment
+import com.example.perludilindungi.ui.fragments.CheckInFragment
 import com.example.perludilindungi.ui.fragments.DaftarFaksesFragment
 import com.example.perludilindungi.ui.fragments.NewsListFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -16,12 +17,17 @@ class MainActivity : AppCompatActivity() {
     private val bookmarkFragment = BookmarkFragment()
     private val daftarFaksesFragment = DaftarFaksesFragment()
     private val newsListFragment = NewsListFragment()
+    private val checkInFragment = CheckInFragment()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         _binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         replaceFragment(newsListFragment)
+
+        binding.buttonA.setOnClickListener {
+            replaceFragment(checkInFragment)
+        }
 
         binding.bottomNavigation.setOnItemSelectedListener { item ->
             when (item.itemId){

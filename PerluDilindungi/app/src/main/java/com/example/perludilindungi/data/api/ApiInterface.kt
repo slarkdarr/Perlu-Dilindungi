@@ -1,10 +1,8 @@
 package com.example.perludilindungi.data.api
 
-import com.example.perludilindungi.data.model.City
-import com.example.perludilindungi.data.model.Fakses
-import com.example.perludilindungi.data.model.NewsResult
-import com.example.perludilindungi.data.model.Province
+import com.example.perludilindungi.data.model.*
 import retrofit2.Call
+import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Query
@@ -23,5 +21,5 @@ interface ApiInterface {
     fun getFakses(@Query("province") province: String,@Query("city") city: String): Call<Fakses>
 
     @POST("check-in")
-    fun postCheckIn():
+    fun postCheckIn(@Body checkInBody: CheckIn): Call<CheckInResponse>
 }
