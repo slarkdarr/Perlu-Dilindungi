@@ -9,7 +9,7 @@ import android.view.WindowManager
 import android.webkit.SslErrorHandler
 import com.example.perludilindungi.R
 import com.example.perludilindungi.databinding.ActivityNewsPageBinding
-import com.squareup.picasso.Picasso
+
 
 
 class NewsPageActivity : AppCompatActivity() {

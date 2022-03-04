@@ -8,7 +8,7 @@ import com.example.perludilindungi.data.model.Fakses
 import com.example.perludilindungi.data.model.FaksesResult
 import com.example.perludilindungi.databinding.ItemFaksesBinding
 
-class DaftarFaksesAdapter(val data: Fakses?, private val onClickListener: OnClickListener):
+class DaftarFaksesAdapter(val data: List<FaksesResult>, private val onClickListener: OnClickListener):
     RecyclerView.Adapter<DaftarFaksesAdapter.DaftarFaksesHolder>() {
 
     inner class DaftarFaksesHolder(val binding: ItemFaksesBinding): RecyclerView.ViewHolder(binding.root){
@@ -29,9 +29,9 @@ class DaftarFaksesAdapter(val data: Fakses?, private val onClickListener: OnClic
     override fun onBindViewHolder(holder: DaftarFaksesHolder, position: Int) {
         Log.d("TAG","ADAPTER BIND DATA::: $data")
         if (data != null) {
-            holder.bind(data?.results?.get(position)!!)
+            holder.bind(data?.get(position)!!)
             holder.itemView.setOnClickListener {
-                onClickListener.onClick(data?.results?.get(position)!!)
+                onClickListener.onClick(data?.get(position)!!)
             }
         }
         
@@ -44,7 +44,7 @@ class DaftarFaksesAdapter(val data: Fakses?, private val onClickListener: OnClic
         }
         else {
             Log.d("TAG","DATA RESULTS.SIZE::: $data.results.size")
-            return data.results.size
+            return data.size
         }
     }
     class OnClickListener(val clickListener : (faksesResult: FaksesResult) ->Unit){
