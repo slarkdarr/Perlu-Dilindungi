@@ -42,7 +42,8 @@ class CheckInFragment : Fragment() {
         // Inflate the layout for this fragment
         _binding = FragmentCheckInBinding.inflate(layoutInflater)
 
-        binding.textViewA.text = "Sesuatu"
+//        binding.textTemp.text = "30°C"
+//        binding.textInfo.text = "Berhasil!"
 
         return binding.root
     }
