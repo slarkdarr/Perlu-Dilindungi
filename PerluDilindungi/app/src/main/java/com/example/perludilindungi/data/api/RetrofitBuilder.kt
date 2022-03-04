@@ -17,7 +17,7 @@ class RetrofitBuilder {
     }
     fun buildRetrofit(): Retrofit {
         return Retrofit.Builder()
-            .baseUrl("https://perludilindungi.herokuapp.com/api/")
+            .baseUrl("https://perludilindungi.herokuapp.com/")
             .client(getInterceptor())
             .addConverterFactory(GsonConverterFactory.create())
             .build()
