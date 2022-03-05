@@ -33,7 +33,7 @@ class CheckInFragment : Fragment(), SensorEventListener {
 
     private lateinit var sensorManager: SensorManager
     private lateinit var tempSensor: Sensor
-    private lateinit var tempString: String
+    private var tempString: String = ""
 
     // TODO: Rename and change types of parameters
     private var param1: String? = null
@@ -45,14 +45,6 @@ class CheckInFragment : Fragment(), SensorEventListener {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
-
-        sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
-
-        if (sensorManager.getDefaultSensor(Sensor.TYPE_AMBIENT_TEMPERATURE) != null) {
-            tempSensor = sensorManager.getDefaultSensor(Sensor.TYPE_AMBIENT_TEMPERATURE)
-        } else {
-            tempString = "-"
-        }
     }
 
     override fun onCreateView(
@@ -61,6 +53,13 @@ class CheckInFragment : Fragment(), SensorEventListener {
     ): View? {
         // Inflate the layout for this fragment
         _binding = FragmentCheckInBinding.inflate(layoutInflater)
+        sensorManager = requireContext().getSystemService(Context.SENSOR_SERVICE) as SensorManager
+
+        if (sensorManager.getDefaultSensor(Sensor.TYPE_AMBIENT_TEMPERATURE) != null) {
+            tempSensor = sensorManager.getDefaultSensor(Sensor.TYPE_AMBIENT_TEMPERATURE)
+        } else {
+            tempString = "-"
+        }
 
         binding.textTemp.text = tempString
         binding.textInfo.text = "Berhasil!"
@@ -69,9 +68,14 @@ class CheckInFragment : Fragment(), SensorEventListener {
     }
 
     override fun onSensorChanged(sensorEvent: SensorEvent) {
+        _binding = FragmentCheckInBinding.inflate(layoutInflater)
         if (sensorEvent.sensor.type == Sensor.TYPE_AMBIENT_TEMPERATURE) {
-            tempString = sensorEvent!!.values[0].toString()
+            binding.textTemp.text = sensorEvent.values[0].toString()
         }
+    }
+
+    override fun onAccuracyChanged(p0: Sensor?, p1: Int) {
+        TODO("Not yet implemented")
     }
 
     companion object {
