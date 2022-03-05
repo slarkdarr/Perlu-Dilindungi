@@ -25,10 +25,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         replaceFragment(newsListFragment)
 
-        binding.buttonA.setOnClickListener {
-            replaceFragment(checkInFragment)
-        }
-
         binding.bottomNavigation.setOnItemSelectedListener { item ->
             when (item.itemId){
                 R.id.navigation_news_list -> replaceFragment(newsListFragment)
@@ -36,6 +32,10 @@ class MainActivity : AppCompatActivity() {
                 R.id.navigation_bookmark -> replaceFragment(bookmarkFragment)
             }
             true
+        }
+
+        binding.qrButton.setOnClickListener {
+            replaceFragment(checkInFragment)
         }
     }
 

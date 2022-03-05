@@ -3,40 +3,29 @@ package com.example.perludilindungi.ui.fragments
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
-import android.content.Intent
 import android.content.pm.PackageManager
 import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
-import android.location.Location
-import android.location.LocationListener
-import android.location.LocationManager
-import android.location.LocationRequest
 import android.os.Bundle
-import android.os.Looper
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
-import androidx.core.content.ContextCompat.checkSelfPermission
-import androidx.core.content.ContextCompat.getSystemService
-import androidx.core.content.PackageManagerCompat
-import com.example.perludilindungi.R
+import androidx.fragment.app.Fragment
+import com.budiyev.android.codescanner.AutoFocusMode
+import com.budiyev.android.codescanner.CodeScanner
+import com.budiyev.android.codescanner.DecodeCallback
+import com.budiyev.android.codescanner.ErrorCallback
+import com.budiyev.android.codescanner.ScanMode
+import com.example.perludilindungi.data.api.RetrofitBuilder
+import com.example.perludilindungi.data.model.CheckIn
 import com.example.perludilindungi.databinding.FragmentCheckInBinding
-import com.example.perludilindungi.databinding.FragmentNewsListBinding
 import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationCallback
-import com.google.android.gms.location.LocationRequest.PRIORITY_HIGH_ACCURACY
-import com.google.android.gms.location.LocationResult
 import com.google.android.gms.location.LocationServices
-import java.util.jar.Manifest
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -52,16 +41,20 @@ class CheckInFragment : Fragment(), SensorEventListener {
     private var _binding : FragmentCheckInBinding? = null
     private val binding get() = _binding!!
 
-    // For temperature sensor
+    // Temperature sensor
     private lateinit var sensorManager: SensorManager
     private lateinit var tempSensor: Sensor
     private var tempString: String? = null
 
-    // For getting latitude and longitude
+    // Get latitude and longitude
     private val LOCATION_PERMISSION_REQ_CODE = 1000;
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private var latitude: Double = 0.0
     private var longitude: Double = 0.0
+
+    // QR Code Scanner
+    private val CAMERA_REQ = 101
+    private lateinit var codeScanner: CodeScanner
 
     // TODO: Rename and change types of parameters
     private var param1: String? = null
@@ -75,6 +68,7 @@ class CheckInFragment : Fragment(), SensorEventListener {
         }
     }
 
+    @SuppressLint("UseRequireInsteadOfGet")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -97,6 +91,10 @@ class CheckInFragment : Fragment(), SensorEventListener {
         println("latitude: $latitude")
         println("longitude: $longitude")
 
+        // Get QR Code
+        setupPermissions()
+        scanCode()
+
         // Update text on front-end
         binding.textTemp.text = tempString
         binding.textInfo.text = "Berhasil!"
@@ -118,13 +116,16 @@ class CheckInFragment : Fragment(), SensorEventListener {
     override fun onResume() {
         super.onResume()
         sensorManager.registerListener(this, tempSensor, SensorManager.SENSOR_DELAY_NORMAL)
+        codeScanner.startPreview()
     }
 
     override fun onPause() {
         super.onPause()
         sensorManager.unregisterListener(this)
+        codeScanner.releaseResources()
     }
 
+    @SuppressLint("UseRequireInsteadOfGet")
     private fun getCurrentLocation() {
         // checking location permission
         if (ActivityCompat.checkSelfPermission(context!!,
@@ -140,8 +141,9 @@ class CheckInFragment : Fragment(), SensorEventListener {
         fusedLocationClient.lastLocation
             .addOnSuccessListener { location ->
                 // getting the last known or current location
-                latitude = location.latitude
-                longitude = location.longitude
+                println(location)
+//                latitude = location.latitude
+//                longitude = location.longitude
             }
             .addOnFailureListener {
                 Toast.makeText(context!!, "Failed on getting current location",
@@ -149,18 +151,71 @@ class CheckInFragment : Fragment(), SensorEventListener {
             }
     }
 
-//    private var resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-//        if (result.resultCode == Activity.RESULT_OK) {
-//            // There are no request codes
-//            val data: Intent? = result.data
-//        }
-//    }
-//
-//    fun openSomeActivityForResult() {
-//        val intent = Intent(this, SomeActivity::class.java)
-//        resultLauncher.launch(intent)
-//    }
+    private fun scanCode() {
+        codeScanner = CodeScanner(requireContext(), binding.scanner)
 
+        codeScanner.apply {
+            camera = CodeScanner.CAMERA_BACK
+            formats = CodeScanner.ALL_FORMATS
+
+            autoFocusMode = AutoFocusMode.SAFE
+            scanMode = ScanMode.CONTINUOUS
+            isAutoFocusEnabled = true
+            isFlashEnabled = false
+
+            decodeCallback = DecodeCallback {
+                requireActivity().runOnUiThread {
+                    RetrofitBuilder().getRetrofit().postCheckIn(CheckIn(it.text,
+                        latitude.toInt(), longitude.toInt()
+                    ))
+                }
+            }
+
+            errorCallback = ErrorCallback {
+                requireActivity().runOnUiThread {
+                    Log.e("Main", "codeScanner: ${it.message}")
+                }
+            }
+
+            binding.scanner.setOnClickListener {
+                codeScanner.startPreview()
+            }
+
+        }
+    }
+
+    private fun setupPermissions() {
+        val permission = ActivityCompat.checkSelfPermission(requireContext(), android.Manifest.permission.CAMERA)
+
+        if (permission != PackageManager.PERMISSION_GRANTED) {
+            makeRequest()
+        }
+    }
+
+    private fun makeRequest() {
+        ActivityCompat.requestPermissions(
+            requireActivity(), arrayOf(android.Manifest.permission.CAMERA),
+            CAMERA_REQ
+        )
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        when (requestCode) {
+            CAMERA_REQ -> {
+                if (grantResults.isEmpty() || grantResults[0] != PackageManager.PERMISSION_GRANTED) {
+                    Toast.makeText(
+                        requireContext(),
+                        "You need the camera permission to use this app",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+        }
+    }
 
     companion object {
         /**
@@ -180,8 +235,5 @@ class CheckInFragment : Fragment(), SensorEventListener {
                     putString(ARG_PARAM2, param2)
                 }
             }
-
-        private const val TAG = "LocationProvider"
-        private const val REQUEST_PERMISSIONS_REQUEST_CODE = 34
     }
 }
