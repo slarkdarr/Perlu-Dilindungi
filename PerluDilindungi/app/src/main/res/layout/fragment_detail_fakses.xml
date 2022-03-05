@@ -121,7 +121,7 @@
 
         <Button
             android:id="@+id/buttonGoogleMap"
-            android:layout_width="wrap_content"
+            android:layout_width="152dp"
             android:layout_height="wrap_content"
             android:text="Google Maps"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -133,9 +133,23 @@
 
         <Button
             android:id="@+id/buttonBookmark"
-            android:layout_width="143dp"
+            android:layout_width="152dp"
             android:layout_height="54dp"
             android:text="+ Bookmark"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.455"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.669"
+
+            />
+
+        <Button
+            android:id="@+id/buttonUnBookmark"
+            android:layout_width="152dp"
+            android:layout_height="54dp"
+            android:text="- Unbookmark"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.455"

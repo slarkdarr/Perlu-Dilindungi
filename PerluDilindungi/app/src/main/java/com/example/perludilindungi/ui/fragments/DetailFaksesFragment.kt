@@ -60,27 +60,33 @@ class DetailFaksesFragment : Fragment() {
                     binding.faskesTelpText.text = "No. Telepon"
                     binding.alamatFaksesText.text = "Alamat Faskes"
 
+                    binding.buttonUnBookmark.setOnClickListener{
+                        viewModel.deleteBookmark(context!!,result!!){
+                            Toast.makeText(context,"Fakses Has Been Unbookmarked", Toast.LENGTH_SHORT).show()
+                            binding.buttonUnBookmark.visibility = View.GONE
+                            binding.buttonBookmark.visibility = View.VISIBLE
+                        }
+                    }
+                    binding.buttonBookmark.setOnClickListener{
+                        viewModel.addBookmark(context!!,result!!){
+                            Toast.makeText(context,"Fakses Added To Bookmark", Toast.LENGTH_SHORT).show()
+                            binding.buttonBookmark.visibility = View.GONE
+                            binding.buttonUnBookmark.visibility = View.VISIBLE
+//                           bin
+                        }
+                    }
 //                    var bookmarkExist = false
                     viewModel = ViewModelProvider(this)[BookmarkViewModel::class.java]
                     viewModel.checkBookmarkExists(context!!,result.id)
                     viewModel.isBookmarkExist.observe(this,{
                         if (it){
-                            binding.buttonBookmark.text ="UNBOOKMARK"
-                            binding.buttonBookmark.setOnClickListener{
-                                viewModel.deleteBookmark(context!!,result!!){
-                                    Toast.makeText(context,"Fakses Has Been Unbookmarked", Toast.LENGTH_SHORT).show()
 
-                                }
-                            }
+                            binding.buttonUnBookmark.visibility = View.VISIBLE
+                            binding.buttonBookmark.visibility = View.GONE
                         }
                         else {
-                            binding.buttonBookmark.text ="BOOKMARK"
-                            binding.buttonBookmark.setOnClickListener{
-                                viewModel.addBookmark(context!!,result!!){
-                                    Toast.makeText(context,"Fakses Added To Bookmark", Toast.LENGTH_SHORT).show()
-//                                    bookmarkExist = true
-                                }
-                            }
+                            binding.buttonUnBookmark.visibility = View.GONE
+                            binding.buttonBookmark.visibility = View.VISIBLE
                         }
                     })
 
