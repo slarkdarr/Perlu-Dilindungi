@@ -68,14 +68,24 @@ class CheckInFragment : Fragment(), SensorEventListener {
     }
 
     override fun onSensorChanged(sensorEvent: SensorEvent) {
-        _binding = FragmentCheckInBinding.inflate(layoutInflater)
         if (sensorEvent.sensor.type == Sensor.TYPE_AMBIENT_TEMPERATURE) {
-            binding.textTemp.text = sensorEvent.values[0].toString()
+            val tempString = sensorEvent.values[0].toString() + " °C"
+            binding.textTemp.text = tempString
         }
     }
 
     override fun onAccuracyChanged(p0: Sensor?, p1: Int) {
-        TODO("Not yet implemented")
+        return
+    }
+
+    override fun onResume() {
+        super.onResume()
+        sensorManager.registerListener(this, tempSensor, SensorManager.SENSOR_DELAY_NORMAL)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        sensorManager.unregisterListener(this)
     }
 
     companion object {
