@@ -50,12 +50,15 @@ class DetailFaksesFragment : Fragment() {
             FragmentResultListener{ responseFakses,bundle ->
                 var result = bundle.getParcelable<FaksesResult>("responseFakses")
                 if (result != null) {
-                    binding.tvDetailFaksesName.text = result.nama
+                    binding.tvDetailFaksesName.text = "Faskes " + result.nama
                     binding.tvDetailFaksesAddress.text = result.alamat
                     binding.tvDetailFaksesCode.text = result.kode
                     binding.tvDetailFaksesStatus.text = result.status
                     binding.tvDetailFaksesTelp.text = result.telp
                     binding.tvDetailFaksesType.text = result.jenisFaskes
+                    binding.faskesStatusText.text = "Status Vaksinasi"
+                    binding.faskesTelpText.text = "No. Telepon"
+                    binding.alamatFaksesText.text = "Alamat Faskes"
 
 //                    var bookmarkExist = false
                     viewModel = ViewModelProvider(this)[BookmarkViewModel::class.java]

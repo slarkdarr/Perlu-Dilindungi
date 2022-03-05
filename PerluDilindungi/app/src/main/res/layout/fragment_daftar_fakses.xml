@@ -13,6 +13,9 @@
         android:layout_marginStart="12dp"
         android:layout_marginTop="16dp"
         android:text="Cari Fakses"
+        android:textStyle="bold"
+        android:textColor="@color/dark_blue"
+        android:textSize="25dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -23,6 +26,9 @@
         android:layout_marginStart="12dp"
         android:layout_marginTop="12dp"
         android:text="Pilih Provinsi"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:textSize="15dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cariFaksesTitle" />
 
@@ -49,6 +55,9 @@
         android:layout_marginStart="12dp"
         android:layout_marginTop="12dp"
         android:text="Pilih Kota"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:textSize="15dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/spinnerProvince" />
 
@@ -65,7 +74,8 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvFakses"
         android:layout_width="match_parent"
-        android:layout_height="375dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="75dp"
         android:layout_marginTop="10dp"
         android:padding="8dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
